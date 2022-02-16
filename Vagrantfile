@@ -1,13 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-N = 3
+N = 2
 master_ip = "192.168.2.20"
 worker_ip = Array.new(N) { |i| "192.168.2.2#{i+1}"}
 token = "abcdef.0123456789abcdef"
 
 k8s_v = "1.23.3-00"
-docker_v = ""
+docker_v = "20.10.12"
 
 Vagrant.configure("2") do |config|
   
@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
     end
     master.vm.provision "file", source: "./kube-flannel.yaml", destination: "~/kube-flannel.yaml"
     master.vm.provision "shell", path: "config.sh", args: [N, master_ip]
-    master.vm.provision "shell", path: "install.sh", args: k8s_v
+    master.vm.provision "shell", path: "install.sh", args: [docker_v, k8s_v]
     master.vm.provision "shell", path: "master.sh", privileged: false, args: [master_ip, token]
   end
 
@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
         vb.customize ["modifyvm", :id, "--groups", "/k8s-cluster"]
       end
       worker.vm.provision "shell", path: "config.sh", args: [N, master_ip]
-      worker.vm.provision "shell", path: "install.sh", args: k8s_v
+      worker.vm.provision "shell", path: "install.sh", args: [docker_v, k8s_v]
       worker.vm.provision "shell", path: "worker.sh", privileged: false, args: [master_ip, token]
     end
   end

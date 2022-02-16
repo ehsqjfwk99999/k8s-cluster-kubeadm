@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # install Docker
-curl -fsSL https://get.docker.com | sudo sh
+curl -fsSL https://get.docker.com | VERSION=$1 sh
 # change dockers' cgroup driver to systemd and restart Docker server
 cat <<EOF | sudo tee /etc/docker/daemon.json
 {
@@ -16,5 +16,5 @@ apt-get install -y apt-transport-https ca-certificates curl
 curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
 echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 apt-get update
-apt-get install -y kubelet=$1 kubeadm=$1 kubectl=$1
+apt-get install -y kubelet=$2 kubeadm=$2 kubectl=$2
 apt-mark hold kubelet kubeadm kubectl

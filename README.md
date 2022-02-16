@@ -17,10 +17,14 @@ Versions
 |:------:|:-------:|
 | Virtual Box | 6.1.30 |
 | Vagrant | 2.2.19 |
-| Vagrant box | ubuntu/focal64 v20220208.0.0 |
-| Ubuntu | 20.04.3 LTS |
-| Docker | 20.10.12 |
-| kubelet | 1.23.3-00 |
-| kubeadm | 1.23.3-00 |
-| kubectl | 1.23.3-00 |
-| Flannel | 0.16.3 |
+| Vagrant box | ubuntu/focal64 v20220208.0.0 (fixed) |
+| Ubuntu | 20.04.3 LTS (fixed) |
+| Docker | 20.10.12 (fixed) |
+| kubelet | 1.23.3-00 (fixed) |
+| kubeadm | 1.23.3-00 (fixed) |
+| kubectl | 1.23.3-00 (fixed) |
+| Flannel | ? (fixed) |
+
+Todos
+-----
+- [ ] Why '/etc/hosts' is needed for node internal-ip.
