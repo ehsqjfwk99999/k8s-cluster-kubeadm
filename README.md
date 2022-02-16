@@ -1,7 +1,7 @@
-k8s-cluster-kubeadm
-===================
+k8s-cluster-vagrant-kubeadm
+===========================
 
-Setup K8s cluster using kubeadm.
+Setup K8s cluster using Vagrant and kubeadm.
 
 Configuration
 -------------
