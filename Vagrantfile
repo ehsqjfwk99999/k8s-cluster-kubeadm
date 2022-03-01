@@ -4,6 +4,7 @@
 N = 2
 master_ip = "192.168.2.20"
 worker_ip = Array.new(N) { |i| "192.168.2.2#{i+1}"}
+pod_network_addr = "10.244.0.0/16"
 token = "abcdef.0123456789abcdef"
 
 k8s_v = "1.23.3-00"
@@ -31,7 +32,7 @@ Vagrant.configure("2") do |config|
     master.vm.provision "file", source: "./kube-flannel.yaml", destination: "~/kube-flannel.yaml"
     master.vm.provision "shell", path: "config.sh", args: [N, master_ip]
     master.vm.provision "shell", path: "install.sh", args: [docker_v, k8s_v]
-    master.vm.provision "shell", path: "master.sh", privileged: false, args: [master_ip, token]
+    master.vm.provision "shell", path: "master.sh", privileged: false, args: [master_ip, token, pod_network_addr]
   end
 
   ### Worker Nodes ###

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # set up the Kubernetes control plane
-sudo kubeadm init --token $2 --token-ttl 0 --apiserver-advertise-address=$1 --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init --token $2 --token-ttl 0 --apiserver-advertise-address=$1 --pod-network-cidr=$3
 
 # make kubectl work for non-root user
 mkdir -p $HOME/.kube
