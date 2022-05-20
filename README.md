@@ -13,7 +13,7 @@ Configuration
 
 Versions
 --------
-| Element| Version |
+| Element | Version |
 |:------:|:-------:|
 | Virtual Box | 6.1.30 |
 | Vagrant | 2.2.19 |
