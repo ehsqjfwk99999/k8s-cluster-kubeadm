@@ -7,6 +7,10 @@ worker_ip = Array.new(N) { |i| "192.168.2.2#{i+1}"}
 pod_network_addr = "10.244.0.0/16"
 token = "abcdef.0123456789abcdef"
 
+
+# network_bridge = "Realtek PCIe GbE Family Controller"
+network_bridge = "Realtek PCIe 2.5GbE Family Controller"
+
 k8s_v = "1.23.3-00"
 docker_v = "20.10.12"
 
@@ -22,7 +26,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "master" do |master|
     master.vm.hostname = "k8s-m"
     master.vm.network "private_network", ip: master_ip
-    master.vm.network "public_network", bridge: "Realtek PCIe GbE Family Controller"
+    master.vm.network "public_network", bridge: network_bridge
     master.vm.provider "virtualbox" do |vb|    
       vb.gui = false     
       vb.name = "k8s-m" 
