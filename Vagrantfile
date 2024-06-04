@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-N = 3
+N = 0
 master_ip = "192.168.2.20"
 worker_ip = Array.new(N) { |i| "192.168.2.2#{i+1}"}
 pod_network_addr = "10.244.0.0/16"
@@ -12,8 +12,8 @@ docker_v = "20.10.12"
 
 Vagrant.configure("2") do |config|
   
-  config.vm.box = "ubuntu/focal64"
-  config.vm.box_version = "20220208.0.0"
+  config.vm.box = "ubuntu/jammy64" # ubuntu 22.04
+  config.vm.box_version = "20240601.0.0"
   config.vm.synced_folder ".", "/vagrant", disabled: true
   
   #=============#
@@ -30,10 +30,10 @@ Vagrant.configure("2") do |config|
       vb.memory = "4096"
       vb.customize ["modifyvm", :id, "--groups", "/Kubernetes Cluster"]
     end
-    master.vm.provision "file", source: "./kube-flannel.yaml", destination: "~/kube-flannel.yaml"
+    # master.vm.provision "file", source: "./kube-flannel.yaml", destination: "~/kube-flannel.yaml"
     master.vm.provision "shell", path: "config.sh", args: [N, master_ip]
-    master.vm.provision "shell", path: "install.sh", args: [docker_v, k8s_v]
-    master.vm.provision "shell", path: "master.sh", privileged: false, args: [master_ip, token, pod_network_addr]
+    master.vm.provision "shell", path: "install.sh", privileged: false, args: [docker_v, k8s_v]
+    # master.vm.provision "shell", path: "master.sh", privileged: false, args: [master_ip, token, pod_network_addr]
   end
 
   #==============#
@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
         vb.customize ["modifyvm", :id, "--groups", "/Kubernetes Cluster"]
       end
       worker.vm.provision "shell", path: "config.sh", args: [N, master_ip]
-      worker.vm.provision "shell", path: "install.sh", args: [docker_v, k8s_v]
+      worker.vm.provision "shell", path: "install.sh", privileged: false, args: [docker_v, k8s_v]
       worker.vm.provision "shell", path: "worker.sh", privileged: false, args: [master_ip, token]
     end
   end
