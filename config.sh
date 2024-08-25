@@ -1,12 +1,14 @@
 #!/bin/bash
 
+export DEBIAN_FRONTEND=noninteractive
+
 # update packages
 apt update
 apt upgrade -y
 apt autoremove -y
 
 # allow ssh password autientication
-sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
 systemctl restart ssh
 
 # turn off swapping (disabled default on vagrant ubuntu/jammy64(22.04) box)
@@ -33,5 +35,5 @@ EOF
 sysctl --system
 
 # # configure /etc/hosts file
-echo "${2} k8s-m" >>/etc/hosts
+echo "${2} k8s-cp" >>/etc/hosts
 for ((i = 1; i <= $1; i++)); do echo "192.168.2.2${i} k8s-w${i}" >>/etc/hosts; done
