@@ -10,22 +10,20 @@ Setup K8s cluster using Vagrant and kubeadm.
 - CNI : Flannel
 
 ## Versions
-- 
 | Element | Version |
 |:------:|:-------:|
-| Virtual Box | 6.1.30 |
-| Vagrant | 2.2.19 |
-| Vagrant box | ubuntu/focal64 v20220208.0.0 (fixed) |
-| Ubuntu | 20.04.3 LTS (fixed) |
-| Docker | 20.10.12 (fixed) |
-| kubelet | 1.23.3-00 (fixed) |
-| kubeadm | 1.23.3-00 (fixed) |
-| kubectl | 1.23.3-00 (fixed) |
-| Flannel | ? (fixed) |
+| Virtual Box     | 7.0.20 |
+| Vagrant         | 2.4.1 |
+| OS(Vagrant box) | ubuntu/jammy64 (fixed) |
+| Ubuntu          | 20.04.3 LTS (fixed) |
+| containerd      | 1.7.12-0ubuntu2~22.04.1 (fixed) |
+| kubelet         | 1.31.2-1.1 (fixed) |
+| kubeadm         | 1.31.2-1.1 (fixed) |
+| kubectl         | 1.31.2-1.1 (fixed) |
+| Flannel         | 0.26.0 (fixed) |
 
-## Todos
-- [ ] Why '/etc/hosts' is needed for node internal-ip.
-
-https://kubernetes.io/docs/setup/production-environment/container-runtimes/
-https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
-https://kubernetes.io/docs/setup/production-environment/container-runtimes/
+## Key Points
+- `containerd` needs systemd for cgroup driver
+- Flannel ...
+    - needs `br_netfilter` module
+    - needs to use the second interface(`enp0s8`), not first one(`enp0s3`)
